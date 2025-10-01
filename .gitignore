@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# Data files (optional: only ignore raw data if too heavy)
+*.csv
+*.xlsx
+*.pkl
+*.h5
+
+# Logs
+*.log
+
+# IDE files
+.vscode/
+.idea/
+
+# Data 
+data/raw/
+data/processed/

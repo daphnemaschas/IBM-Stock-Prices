@@ -3,6 +3,8 @@ IBM (International Business Machines Corporation) is one of the oldest and most 
 
 Financial researchers and analysts often rely on adjusted prices to measure true returns, because raw close prices do not account for dividends and corporate actions. This dataset provides IBM’s historical stock data from 1980 to 2025, with an Adj Close column computed according to CRSP-style standards, making it suitable for academic, financial, and machine learning research.
 
+The dataset and element of context have been found on Kaggle.
+
 ## Content
 The dataset contains daily stock market data for IBM obtained from Yahoo Finance. Unlike raw downloads, this dataset includes a carefully constructed Adjusted Close column, calculated using dividends and stock splits.
 
@@ -42,13 +44,34 @@ Data was sourced from Yahoo Finance
 
 Adjustments were implemented following standards used by Center for Research in Security Prices (CRSP).
 
-## Inspiration
-This dataset can be useful for:
+## Subjects tackled
 
-Financial analysts exploring long-term returns.
+1. Time Series Forecasting
 
-Data scientists building stock price prediction models.
+- Classical models: ARIMA, SARIMA, Prophet
 
-Students practicing time-series forecasting.
+- Deep learning: LSTM, GRU, 1D CNN, Transformer-based models
 
-Researchers performing event studies (e.g., effect of dividends, stock splits, or economic crises).
+2. Anomaly Detection
+
+- Identifying periods of major financial crashes (2000, 2008, 2020, etc.)
+
+- Outlier detection methods for abnormal market behavior
+
+- Use of unsupervised deep learning (autoencoders, isolation forests)
+
+3. Feature Engineering and Financial Indicators
+
+- Creating derived features such as moving averages, RSI, MACD, and volatility
+
+- Computing daily and cumulative returns
+
+- Evaluating whether engineered features improve model performance
+
+4. Visualization and Dashboard
+
+- Interactive plots showing long-term historical stock trends
+
+- Comparison of raw vs adjusted stock prices
+
+- Streamlit dashboard for real-time forecasting and anomaly exploration
