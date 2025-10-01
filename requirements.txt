@@ -1,12 +1,27 @@
+# Data manipulation
 pandas
 numpy
+
+# Visualization
 matplotlib
 seaborn
+plotly
+
+# Machine Learning / Statistics
 scikit-learn
 statsmodels
 prophet
+
+# Deep Learning
 tensorflow
-torch
+pytorch
 transformers
-plotly
+
+# Time series and forecasting
+
+# Jupyter
+ipykernel
+jupyter
+
+# Web / Dashboard
 streamlit
