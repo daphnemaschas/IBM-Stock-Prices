@@ -11,6 +11,8 @@ plotly
 scikit-learn
 statsmodels
 prophet
+xgboost
+lightgbm
 
 # Deep Learning
 tensorflow
