@@ -1,17 +1,16 @@
 """
 Object-oriented preprocessing pipeline for time series forecasting.
 
-Provides a Preprocessor class for:
-- Loading and cleaning financial time series data
-- Generating technical indicators and engineered features
-- Splitting data chronologically for model training
-- Preparing data for forecasting frameworks (ARIMA, Prophet, LSTM)
+This module provides:
+- The Preprocessor class for loading, cleaning, and feature engineering of financial data.
+- The TimeSeriesDataset class for preparing sequential data for RNN-based models.
 """
 
+import torch
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-
+from torch.utils.data import Dataset
 
 class Preprocessor:
     """
@@ -128,3 +127,30 @@ class Preprocessor:
         plt.ylabel("Value")
         plt.grid(True)
         plt.show()
+
+class TimeSeriesDataset(Dataset):
+    """
+    PyTorch Dataset for time series sequences.
+
+    Converts a 1D array of values into sequences of fixed length
+    suitable for RNN training.
+    """
+    def __init__(self, series: np.ndarray, window_size: int):
+        """
+        Args:
+            series (np.ndarray): 1D array of normalized values.
+            window_size (int): Number of past steps to use for prediction.
+        """
+        self.X, self.y = [], []
+        for i in range(window_size, len(series)):
+            self.X.append(series[i-window_size:i])
+            self.y.append(series[i])
+        
+        self.X = torch.tensor(self.X, dtype=torch.float32).unsqueeze(-1)
+        self.y = torch.tensor(self.y, dtype=torch.float32)
+
+    def __len__(self):
+        return len(self.X)
+
+    def __getitem__(self, idx):
+        return self.X[idx], self.y[idx]
