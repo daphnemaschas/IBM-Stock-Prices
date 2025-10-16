@@ -69,6 +69,8 @@ class Preprocessor:
         df["BB_Mid"] = df["Adj Close"].rolling(win).mean()
         df["BB_Upper"] = df["BB_Mid"] + 2 * df["Adj Close"].rolling(win).std()
         df["BB_Lower"] = df["BB_Mid"] - 2 * df["Adj Close"].rolling(win).std()
+        
+        df = df.fillna(method='bfill').fillna(method='ffill')
 
         self.data = df
         return df
@@ -145,9 +147,12 @@ class TimeSeriesDataset(Dataset):
         for i in range(window_size, len(series)):
             self.X.append(series[i-window_size:i])
             self.y.append(series[i])
+
+        self.X = np.array(self.X)
+        self.y = np.array(self.y)
         
-        self.X = torch.tensor(self.X, dtype=torch.float32).unsqueeze(-1)
-        self.y = torch.tensor(self.y, dtype=torch.float32)
+        self.X = torch.tensor(self.X, dtype=torch.float32) # .unsqueeze(-1)  # (N, window, 1)
+        self.y = torch.tensor(self.y, dtype=torch.float32).view(-1, 1)     # (N, 1)
 
     def __len__(self):
         return len(self.X)

@@ -13,6 +13,7 @@ import pandas as pd
 import torch
 from torch import nn
 from torch.utils.data import DataLoader
+from tqdm import tqdm
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import mean_squared_error, mean_absolute_error
 import matplotlib.pyplot as plt
@@ -103,18 +104,25 @@ class RNNForecaster:
 
         for epoch in range(epochs):
             losses = []
-            for X_batch, y_batch in self.train_loader:
+            loop = tqdm(self.train_loader, desc=f"Epoch {epoch+1}/{epochs}", leave=False)
+            
+            for X_batch, y_batch in loop:
                 X_batch = X_batch.to(self.device)
                 y_batch = y_batch.to(self.device)
+
                 optimizer.zero_grad()
                 rnn_out, _ = self.model(X_batch)
                 y_pred = self.fc(rnn_out[:, -1, :])
-                loss = criterion(y_pred.squeeze(), y_batch)
+
+                loss = criterion(y_pred.view(-1), y_batch.view(-1))                
                 loss.backward()
                 optimizer.step()
+                
                 losses.append(loss.item())
-            if (epoch + 1) % 10 == 0:
-                print(f"Epoch {epoch+1}/{epochs}, Loss: {np.mean(losses):.6f}")
+                loop.set_postfix(loss=np.mean(losses))
+            
+            print(f"Epoch {epoch+1}/{epochs}, Avg Loss: {np.mean(losses):.6f}")
+
         self.trained = True
 
     def predict(self):
